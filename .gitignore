@@ -1,1 +1,6 @@
-
+*.exe
+*.db
+*.o
+*.out
+*.class
+build/
