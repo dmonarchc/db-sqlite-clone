@@ -1,0 +1,72 @@
+Parte 1 - Introducción y el REPL (Read-Eval-Print Loop)
+--------------------------------------------------------
+
+¿Qué es esto?
+
+Vamos a crear nuestra propia base de datos desde cero, como una versión simple de SQLite, usando el lenguaje C.
+
+¿Para qué sirve una base de datos?
+
+Imagina que tienes una libreta donde anotas los datos de tus amigos: su nombre, número de teléfono, correo, etc.
+Una base de datos hace algo parecido, pero en el computador, y permite guardar, buscar y ordenar esa información rápidamente.
+
+¿Por qué crear una base de datos desde cero?
+
+Porque muchos usamos bases de datos como SQLite, MySQL o PostgreSQL... ¡pero no sabemos cómo funcionan por dentro!
+Este proyecto es como abrir una caja mágica y descubrir todos sus secretos.
+
+---
+
+¿Cómo funciona internamente una base de datos?
+
+Una base de datos se divide en dos grandes partes:
+
+1. El **front-end** (frente):
+   - Es como el "intérprete" de nuestras preguntas (consultas SQL).
+   - Se encarga de:
+     - Separar la consulta en palabras (esto lo hace el *tokenizer*)
+     - Ver si la frase tiene buena gramática (esto lo hace el *parser*)
+     - Convertir esa frase en instrucciones internas (esto lo hace el *code generator*)
+
+2. El **back-end** (parte trasera):
+   - Es como la fábrica que hace el trabajo.
+   - Incluye:
+     - La *máquina virtual (VM)*: ejecuta instrucciones como un robot.
+     - El *B-tree*: una estructura parecida a un libro ordenado, para guardar y buscar datos.
+     - El *pager*: decide qué parte del archivo de datos se debe leer o escribir.
+     - El *OS interface*: se comunica con el sistema operativo (Windows, Linux, etc.).
+
+---
+
+Ejemplo sencillo:
+
+Cuando escribes algo como:
+  SELECT nombre FROM amigos WHERE id = 5;
+
+Esto es lo que pasa por dentro:
+
+1. El tokenizer lo separa: ["SELECT", "nombre", "FROM", "amigos", "WHERE", "id", "=", "5"]
+2. El parser revisa si esa frase tiene sentido.
+3. El code generator crea instrucciones internas (como un programa).
+4. La VM ejecuta esas instrucciones:
+   - "Busca en la tabla amigos"
+   - "Revisa el campo id"
+   - "Devuelve el nombre si id = 5"
+5. El pager y el B-tree ayudan a encontrar la información dentro del archivo.
+6. Finalmente, la respuesta aparece en la pantalla.
+
+---
+
+¿Qué haremos en esta primera parte?
+
+Vamos a construir el **REPL** (Read-Eval-Print Loop), que es como una consola donde escribes comandos y obtienes respuestas.
+
+Será como crear nuestra propia mini terminal tipo SQLite:
+
+  db >
+
+Ahí podrás escribir comandos, y poco a poco vamos a enseñarle a entender cosas más avanzadas.
+
+---
+
+¡Es como enseñarle a hablar a tu propia base de datos! 📚🧠💻
