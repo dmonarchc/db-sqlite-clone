@@ -9,3 +9,7 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 #endif
 
 #endif
+
+#include <ctype.h>  // para tolower
+
+void normalize_input(char* str) ;
