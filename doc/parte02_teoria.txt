@@ -1,0 +1,23 @@
+Parte 02 - Análisis y ejecución de sentencias SQL simples (INSERT y SELECT)
+
+En esta segunda parte del proyecto sqlite-clone se amplía el REPL para que acepte y procese comandos SQL básicos: INSERT y SELECT.
+
+Estructura general:
+
+1. Se define una enumeración `StatementType` para identificar si una sentencia es de tipo INSERT o SELECT.
+2. Se implementa un parser básico que revisa el comienzo del input del usuario:
+   - Si comienza con "insert", se interpreta como una sentencia INSERT.
+   - Si comienza con "select", se interpreta como una sentencia SELECT.
+   - Si no coincide con ninguna, se marca como PREPARE_UNRECOGNIZED_STATEMENT.
+3. Se definen las estructuras `Statement` y las funciones `prepare_statement` y `execute_statement`.
+   - `prepare_statement()` analiza la entrada.
+   - `execute_statement()` solo imprime un mensaje por ahora (la lógica real vendrá después).
+4. Se incorpora lógica para detectar comandos SQL sin distinguir mayúsculas o minúsculas.
+   - Se agrega la función `normalize_input()` que convierte la entrada del usuario a minúsculas usando `tolower`.
+
+Resumen:
+- Se reconoce y ejecuta INSERT y SELECT.
+- Se estructura el código para separar parsing y ejecución.
+- Se mejora la experiencia del usuario reconociendo comandos sin importar el uso de mayúsculas.
+
+Esto sienta las bases para validar sintaxis, extraer argumentos y más adelante trabajar con estructuras de datos internas para almacenar y consultar información.
