@@ -1,82 +1,83 @@
-# sqlite-clone
+# 🗄 sqlite-clone
 
-Construyendo una base de datos tipo SQLite desde cero en C, como ejercicio de aprendizaje siguiendo el tutorial [Let's Build a Simple Database](https://cstack.github.io/db_tutorial/).
-
-Este proyecto implementa un intérprete de comandos SQL básico (REPL), un sistema de almacenamiento simple y otras estructuras internas que simulan el funcionamiento de SQLite, con el objetivo de aprender:
-
-- Cómo se estructuran los motores de bases de datos
-- Cómo funciona el parsing, almacenamiento y ejecución de comandos SQL
-- Manejo de memoria, buffers y estructuras de bajo nivel en C
-
----
-
-## 🔧 Estado actual
-
-🟢 **Parte 01 completada**:  
-✔ REPL funcional  
-✔ Lectura de comandos desde consola (`read_input`)  
-✔ Implementación multiplataforma de `getline()` (con fallback para Windows)  
-✔ Estructura de proyecto con separación en módulos  
-✔ Documentación y control de versiones limpio
+Repositorio que implementa una base de datos relacional tipo SQLite desde cero en C, siguiendo el proyecto [Let's Build a Simple Database](https://cstack.github.io/db_tutorial/).
 
 ---
 
 ## 📁 Estructura del proyecto
 
 ```
-sqlite-clone/
-├── main.c                # Punto de entrada principal
-├── utils.c / utils.h     # Funciones de soporte como getline (Windows)
-├── doc/                  # Explicaciones teóricas por parte
-│   ├── parte01_teoria.txt
-│   └── explicacion_utils.txt
-├── .gitignore
-└── README.md
+db-sqlite-clone/
+├── Makefile
+├── README.md
+├── build/
+│   └── (archivos binarios)
+├── src/
+│   ├── constants.h
+│   ├── input_buffer.c
+│   ├── input_buffer.h
+│   ├── main.c
+│   ├── row.c
+│   ├── row.h
+│   ├── statement.c
+│   ├── statement.h
+│   ├── table.c
+│   └── table.h
+└── test/
+    └── test_script.txt
 ```
 
 ---
 
-## ⚙️ Compilación
+## ✅ Progreso por partes
 
-Compilar en Windows (usando GCC o MinGW):
+🟢 Parte 01 completada:
+✔ REPL funcional  
+✔ Lectura de comandos desde consola (`read_input`)  
+✔ Implementación multiplataforma de `getline()` (con fallback para Windows)  
+✔ Estructura de proyecto con separación en módulos  
+✔ Documentación y control de versiones limpio  
+
+🟢 Parte 02 completada:
+✔ Introducción de estructuras `MetaCommand` y `Statement`  
+✔ Implementación del compilador de sentencias SQL simples  
+✔ Ejecución básica de `insert` y `select` desde memoria directa  
+✔ Comienzo de la máquina virtual con funciones como `execute_insert()` y `execute_select()`  
+
+🟢 Parte 03 completada:
+✔ Implementación de la estructura `Row`  
+✔ Serialización y deserialización de filas  
+✔ Introducción del concepto de página (4KB) y paginación en memoria  
+✔ Almacenamiento de filas serializadas en un arreglo de páginas  
+✔ Capacidad máxima definida por número de páginas y filas por página  
+
+🟢 Parte 04 completada:
+✔ Pruebas automatizadas con scripts (`test_script.txt`)  
+✔ Validaciones de longitud en `username` y `email`  
+✔ Manejo de errores por tabla llena o entradas inválidas  
+✔ Ejecución de pruebas con: `./build/db < test/test_script.txt`  
+✔ Corrección de errores por terminadores nulos faltantes en strings (`\0`)  
+
+---
+
+## ⚙ Compilación
 
 ```bash
-gcc main.c utils.c -o db
+make
 ```
 
-Compilar en Linux/macOS:
+Esto generará el ejecutable `db` en la carpeta `build/`.
+
+---
+
+## 🧪 Ejecución de pruebas
 
 ```bash
-gcc main.c -o db
+./build/db < test/test_script.txt
 ```
 
 ---
 
-## 🚀 Ejecución
+## 📌 Notas
 
-```bash
-./db
-```
-
-Esto abrirá un REPL donde podrás ingresar comandos como:
-
-```
-> .exit
-```
-
-(En las siguientes partes se agregarán comandos como `insert`, `select`, etc.)
-
----
-
-## 📚 Créditos y fuente
-
-Este proyecto sigue la guía de [cstack/db_tutorial](https://cstack.github.io/db_tutorial/).  
-Desarrollado como práctica personal por [dmonarchc](https://github.com/dmonarchc).
-
----
-
-## 📌 Próximos pasos
-
-- [ ] Agregar soporte para comandos `insert` y `select`  
-- [ ] Serialización en archivo `.db`  
-- [ ] Implementar estructura de páginas (pager y B-trees)  
+Este proyecto es educativo y está basado en la guía de construcción de una base de datos paso a paso.
