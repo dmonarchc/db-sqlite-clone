@@ -1,0 +1,19 @@
+📚 Teoría - Parte 04: Revisar que no se rompa y hacer pruebas
+
+Ahora que ya podemos guardar las filas más ordenadamente, necesitamos asegurarnos de que todo funcione bien.
+
+🧠 ¿Qué hicimos?
+- Revisamos que el nombre de usuario y el correo no sean muy largos.
+- Si alguien intenta meter algo muy largo, le mostramos un mensaje de error.
+- También mostramos un error si la tabla ya está llena.
+- Corregimos un error donde algunas palabras no se mostraban bien porque no terminaban con un "fin de palabra" especial.
+
+🧪 Hicimos un archivo con comandos para probar automáticamente que todo funcione.
+- En vez de escribir a mano cada comando, los pusimos todos en un archivo llamado `test_script.txt`.
+- Podemos hacer que el programa lea ese archivo con este comando:
+  ```bash
+  ./build/db < test/test_script.txt
+  ```
+
+🎯 ¿Por qué?
+Porque así podemos asegurarnos de que todo funcione sin tener que escribir todo una y otra vez.

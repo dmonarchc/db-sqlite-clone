@@ -1,0 +1,15 @@
+📚 Teoría - Parte 03: Guardar las cosas ordenadamente en memoria
+
+Hasta ahora, guardábamos las filas (con ID, nombre y correo) una detrás de otra en la memoria, como si fueran fichas.
+
+Pero ahora queremos hacerlo como en una biblioteca: con estantes y cajas.
+
+🧠 ¿Qué hicimos?
+- Creamos una forma de guardar cada fila como si fuera un conjunto de bytes (esto se llama "serializar").
+- Luego hicimos lo contrario: convertir los bytes otra vez en una fila ("deserializar").
+- Dividimos la memoria en "páginas", que son como cajas grandes.
+- Cada página puede guardar muchas filas.
+- Y la tabla ahora es como un mueble con muchas cajas (páginas).
+
+🎯 ¿Por qué?
+Así es como lo hacen las bases de datos reales. Nos estamos preparando para guardar todo esto en un archivo más adelante.
