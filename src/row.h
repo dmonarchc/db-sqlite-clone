@@ -5,8 +5,8 @@
 
 //Macros y offset
 #define size_of_attribute(Struct, Attribute) sizeof(((Struct*)0)->Attribute)
-#define COLUMN_USERNAME_SIZE 32
-#define COLUMN_EMAIL_SIZE 255
+#define COLUMN_USERNAME_SIZE 32+1
+#define COLUMN_EMAIL_SIZE 255+1
 
 #define ID_SIZE sizeof(uint32_t)
 #define USERNAME_SIZE COLUMN_USERNAME_SIZE
