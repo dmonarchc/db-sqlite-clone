@@ -6,6 +6,7 @@
 #include "statement.h"
 #include "inputbuffer.h"
 #include "table.h"
+#include "pager.h"
 #include "utils.h"
 
 void print_prompt() { printf("db > "); }

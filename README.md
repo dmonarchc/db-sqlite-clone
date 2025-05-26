@@ -58,6 +58,13 @@ db-sqlite-clone/
 ✔ Ejecución de pruebas con: `./build/db < test/test_script.txt`  
 ✔ Corrección de errores por terminadores nulos faltantes en strings (`\0`)  
 
+🟢 Parte 05 completada:
+✔ Implementación del sistema de paginación (`Pager`)  
+✔ Incorporación del archivo físico `dbfile.db` para persistencia de datos  
+✔ Lectura y escritura de páginas con `get_page` y `pager_flush`  
+✔ Inclusión de lógica para cerrar y guardar datos (`db_close`)  
+✔ Soporte de hasta 100 páginas en memoria  
+✔ Separación clara entre memoria y almacenamiento en disco  
 ---
 
 ## ⚙ Compilación

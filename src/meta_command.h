@@ -2,6 +2,7 @@
 #define META_COMMAND_H
 
 #include "inputbuffer.h"  // Porque se usa InputBuffer*
+#include "pager.h"
 #include "table.h"
 
 typedef enum {

@@ -3,7 +3,8 @@
 
 #include <stdint.h>
 #include "row.h"
-#include "pager.h"
+
+struct Pager;
 
 #define PAGE_SIZE 4096
 #define TABLE_MAX_PAGES 100
@@ -12,10 +13,9 @@
 
 typedef struct {
     uint32_t num_rows;
-    Pager* pager;
+    struct Pager* pager; 
 } Table;
 
-// Metodos
 void* row_slot(Table* table, uint32_t row_num);
 Table* db_open(const char* filename);
 void free_table(Table* table);

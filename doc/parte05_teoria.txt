@@ -1,0 +1,38 @@
+Parte 05 - Paginación y Persistencia (Explicado como si tuvieras 10 años)
+
+¿Qué hicimos en esta parte?
+
+Imagina que tienes una libreta para anotar cosas (esa es nuestra base de datos). Pero solo puedes ver una hoja a la vez porque es muy grande. Entonces, lo que hicimos fue aprender a dividir la libreta en páginas para trabajar con ellas más fácilmente. A esto le llamamos paginación.
+
+¿Qué es una página?
+
+Una página es como una hoja de esa libreta. Cada hoja puede guardar varios datos (como nombres, edades, etc). En vez de guardar todo de una sola vez, vamos guardando hoja por hoja.
+
+¿Qué es el Pager?
+
+El Pager es como una persona que se encarga de darte la hoja que necesitas. Si le dices "quiero la hoja 3", él va y la busca. Si no la tiene, la crea. También se encarga de guardar las hojas cuando terminamos.
+
+¿Cómo lo hicimos?
+
+1. Creamos el archivo pager.c y pager.h:
+   - Aquí escribimos las reglas para pedir, guardar y cerrar las páginas.
+   - Usamos un arreglo de 100 páginas (como tener espacio para 100 hojas).
+
+2. Modificamos table.c y row.c para usar estas páginas.
+   - Ahora cuando queremos guardar o leer datos, buscamos en la hoja correcta.
+
+3. Creamos funciones como get_page:
+   - Si ya tenemos la hoja, la usamos.
+   - Si no, la creamos.
+
+4. Agregamos persistencia:
+   - Guardamos en un archivo real llamado dbfile.db lo que escribimos.
+   - Así, si apagamos y encendemos, ¡los datos siguen ahí!
+
+¿Qué aprendimos?
+
+- Que una base de datos necesita dividir la información para manejarla mejor.
+- Que es importante tener alguien (el Pager) que nos ayude a pedir y guardar esa información.
+- Que guardar en el computador (no solo en la RAM) es necesario para no perder los datos.
+
+¡Ahora nuestra mini base de datos ya puede guardar datos en disco y dividirlos en páginas como las bases de datos de verdad!
