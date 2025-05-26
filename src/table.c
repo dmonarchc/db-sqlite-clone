@@ -13,7 +13,7 @@ void* row_slot(Table* table, uint32_t row_num) {
     return page + byte_offset;
 }
 
-Table* new_table() {
+Table* db_open() {
     Table* table = (Table*)malloc(sizeof(Table));
     table->num_rows = 0;
     for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {

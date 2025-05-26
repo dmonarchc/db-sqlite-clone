@@ -11,14 +11,21 @@
 void print_prompt() { printf("db > "); }
 
 int main(int argc, char *argv[]) {
-  Table* table = new_table();
+  if (argc < 2) {
+    printf("Must supply a database filename.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  char* filename = argv[1];
+  Table* table = db_open(filename);
+
   InputBuffer *input_buffer = new_input_buffer();
   while (true) {
     print_prompt();
     read_input(input_buffer);
     normalize_input(input_buffer->buffer);
     if (input_buffer->buffer[0] == '.') {
-      switch (do_meta_command(input_buffer)) {
+      switch (do_meta_command(input_buffer, table)) {
       case (META_COMMAND_SUCCESS):
         continue;
       case (META_COMMAND_UNRECOGNIZED_COMMAND):
@@ -46,7 +53,7 @@ int main(int argc, char *argv[]) {
 
     switch (execute_statement(&statement, table)) {
       case (EXECUTE_SUCCESS):
-        printf("Execute.\n");
+        printf("Executed.\n");
         break;
       case (EXECUTE_TABLE_FULL):
         printf("Error: Table full.\n");
