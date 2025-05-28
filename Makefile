@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -std=c99 -Wall -Iinclude
+LDFLAGS = -static
 
 # Listado manual de fuentes
 SRC = \
@@ -26,7 +27,7 @@ all: $(TARGET)
 # Crear ejecutable
 $(TARGET): $(OBJS)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 # Compilar cada .c a .o
 $(BUILD_DIR)/%.o: src/%.c
@@ -37,8 +38,8 @@ $(BUILD_DIR)/%.o: src/%.c
 clean:
 	rm -rf $(BUILD_DIR) dbfile.db mydb.db
 
-# Run
+# Ejecutar
 run: all
 	./build/db mydb.db
-	
-.PHONY: all clean
+
+.PHONY: all clean run

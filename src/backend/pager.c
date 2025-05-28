@@ -3,9 +3,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <fcntl.h>
-#include <io.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#ifdef _WIN32
+  #include <io.h>
+#endif
 
 #include "pager.h"  // Ya incluye table.h
 

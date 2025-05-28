@@ -1,12 +1,17 @@
 #ifndef INPUT_BUFFER_H
 #define INPUT_BUFFER_H
 
-#include "utils.h" // Asegura que ssize_t esté definido en Windows
+ // Asegura que ssize_t esté definido en Windows
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+    #include "utils.h"
+#else
+    #include <sys/types.h>
+#endif
 
 typedef struct {
     char *buffer;           // Apunta al texto ingresado por el usuario
