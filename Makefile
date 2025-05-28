@@ -11,7 +11,8 @@ SRC = \
 	src/parser/statement.c \
 	src/backend/row.c \
 	src/backend/table.c \
-	src/backend/pager.c
+	src/backend/pager.c \
+	src/backend/cursor.c
 
 # Carpeta de salida
 BUILD_DIR = build

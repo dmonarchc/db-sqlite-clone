@@ -2,7 +2,10 @@
 #define CURSOR_H
 
 #include <stdint.h>
-#include "table.h"
+#include <stdbool.h>
+
+struct Table;
+typedef struct Table Table;
 
 typedef struct {
     Table* table;
@@ -12,5 +15,6 @@ typedef struct {
 
 Cursor* table_start(Table* table);
 Cursor* table_end(Table* table);
+void cursor_advance(Cursor* cursor);
 
-#endif // INPUT_BUFFER_H
+#endif // CURSOR_H
