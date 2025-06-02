@@ -1,0 +1,33 @@
+Parte 6: Cursors
+
+En esta parte del proyecto se introduce un nuevo concepto fundamental para navegar por las filas de la base de datos: los cursores (cursors). Un cursor es una estructura que mantiene una posición dentro de una tabla, permitiendo recorrer las filas de manera secuencial, como lo haría un iterador.
+
+Hasta ahora, los datos eran accedidos directamente por índices, pero eso era poco flexible. Con los cursores se puede avanzar fila por fila con mayor claridad.
+
+Objetivos principales de esta parte:
+
+1. **Introducción de la estructura Cursor**
+   Se define una nueva estructura llamada `Cursor` que representa una posición actual en la tabla:
+   ```c
+   typedef struct {
+       Table* table;
+       uint32_t row_num;
+       bool end_of_table;
+   } Cursor;
+   ```
+
+2. **Funciones clave:**
+   - `table_start()` devuelve un cursor apuntando a la primera fila.
+   - `table_end()` devuelve un cursor apuntando al final (una posición más allá de la última fila).
+   - `cursor_value()` devuelve el puntero a la posición de memoria donde está una fila dada.
+   - `cursor_advance()` avanza el cursor una fila hacia adelante.
+
+3. **Uso de cursores en ejecución**
+   Se modifica `execute_insert()` para que use un cursor apuntando al final de la tabla, de modo que inserte allí.
+   Se modifica `execute_select()` para que recorra la tabla desde el inicio hasta el final, usando un cursor que avanza fila por fila.
+
+4. **Ventajas**
+   Este cambio permite desacoplar la lógica de la máquina virtual de los detalles de paginación y ubicación en memoria. La lógica de lectura y escritura queda más limpia, lo que es una gran mejora hacia la mantenibilidad del código.
+
+5. **Resumen**
+   Los cursores son un paso fundamental en el diseño de una base de datos. Permiten abstraer el recorrido de datos y son el primer componente que acerca el diseño a lo que hacen los motores de base de datos reales.

@@ -1,0 +1,32 @@
+📘 Parte 07 – Navegación de Páginas con Cursores
+
+🧠 Conceptos Introducidos
+
+1. Cursor
+Un cursor es una estructura que representa una posición dentro de una tabla. Sirve para recorrer fila por fila una tabla, ayudando a abstraer la navegación de páginas y filas en memoria.
+
+Se define con:
+- Table* table: tabla sobre la que opera.
+- uint32_t row_num: número de fila actual.
+- bool end_of_table: indica si se ha llegado al final de la tabla.
+
+2. Navegación por Cursores
+Se crean funciones para obtener un cursor al inicio (table_start) y uno al final (table_end) de la tabla. Luego se avanza con cursor_advance.
+
+Esto permite que las operaciones SELECT e INSERT no accedan directamente a table->pager, sino que usen cursores, lo cual prepara la arquitectura para árboles B+ más adelante.
+
+⚙️ Cambios en el Código
+
+- Se introduce cursor.[c|h].
+- Se extrae la lógica de acceso a filas (row_slot) y se transforma en cursor_value(cursor).
+- Se reemplaza table->pager en funciones execute_insert y execute_select por el uso de cursores.
+- Se mantiene la estructura de paginación, pero ahora el cursor encapsula la navegación.
+
+🔄 Motivo del Cambio
+
+Hasta ahora, el acceso a los datos era directo: cada fila se localizaba mediante row_num. Esto funciona en una base de datos simple, pero no es flexible para estructuras más complejas.
+
+Con Cursor, ahora:
+- Se puede abstraer la navegación entre filas y páginas.
+- Se facilita el cambio a estructuras como árboles B+.
+- Se encapsula mejor el acceso, lo que simplifica futuras extensiones.

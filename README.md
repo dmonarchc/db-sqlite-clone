@@ -66,6 +66,20 @@ db-sqlite-clone/
 ✔ Soporte de hasta 100 páginas en memoria  
 ✔ Separación clara entre memoria y almacenamiento en disco  
 
+🟢 Parte 06 completada:  
+✔ Abstracción de la posición de lectura/escritura a través del `Cursor`  
+✔ Definición de operaciones `table_start()`, `table_end()` y `cursor_advance()`  
+✔ Sustitución de la lógica de posicionamiento manual por el uso de `Cursor`  
+✔ Iteración simplificada de filas con un cursor desde `execute_select()`  
+✔ Escritura de datos utilizando `cursor_value(cursor)`
+
+🟢 Parte 07 completada:  
+✔ Introducción del encabezado de página (`page header`) con `num_rows` persistente  
+✔ Cálculo de `num_rows` a partir del encabezado del archivo si existe  
+✔ Escritura de `num_rows` en disco desde `db_close()`  
+✔ Carga de `num_rows` al abrir un archivo existente  
+✔ Persistencia completa del estado de la tabla en el archivo binario
+
 ---
 
 ## ⚙ Compilación
@@ -80,10 +94,17 @@ Esto generará el ejecutable `db` en la carpeta `build/`.
 
 ## 🧪 Ejecución de pruebas
 
+
+# Pruebas básicas sin validación automática
 ```bash
 ./build/db < test/test_script.txt
+
 ```
 
+# Pruebas con rspec (recomendado)
+```bash
+rspec
+```
 ---
 
 ## 📌 Notas
