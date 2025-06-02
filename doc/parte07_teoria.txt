@@ -1,32 +1,50 @@
-📘 Parte 07 – Navegación de Páginas con Cursores
+===========================
+Parte 07 – Árboles B
+===========================
 
-🧠 Conceptos Introducidos
+¿Qué es un Árbol B?
+-------------------
+Un árbol B (o B-tree) es como una biblioteca mágica que organiza los libros (datos) en estanterías especiales (nodos) 
+para que sea muy rápido encontrar cualquier libro sin tener que revisar todos.
 
-1. Cursor
-Un cursor es una estructura que representa una posición dentro de una tabla. Sirve para recorrer fila por fila una tabla, ayudando a abstraer la navegación de páginas y filas en memoria.
+Hasta ahora, en nuestra base de datos, solo teníamos una gran estantería con todos los libros desordenados. 
+Esto funciona cuando hay pocos libros, pero si tenemos millones, ¡buscar uno sería muy lento!
 
-Se define con:
-- Table* table: tabla sobre la que opera.
-- uint32_t row_num: número de fila actual.
-- bool end_of_table: indica si se ha llegado al final de la tabla.
+¿Y qué hace especial a un Árbol B?
+----------------------------------
+- Divide los datos en páginas (como cajas).
+- Cada página puede tener otras páginas dentro (como cajas con cajitas).
+- Las cajas están ordenadas y saben a qué cajita ir para buscar un dato.
+- ¡Así solo abrimos unas pocas cajas en lugar de todas!
 
-2. Navegación por Cursores
-Se crean funciones para obtener un cursor al inicio (table_start) y uno al final (table_end) de la tabla. Luego se avanza con cursor_advance.
+En esta parte...
+---------------
+Todavía **no** vamos a construir el árbol B de verdad, pero vamos a preparar todo para hacerlo en el futuro.
 
-Esto permite que las operaciones SELECT e INSERT no accedan directamente a table->pager, sino que usen cursores, lo cual prepara la arquitectura para árboles B+ más adelante.
+Cosas que hacemos:
+------------------
+1. Cambiamos cómo se guarda la información:
+   - Antes: los datos estaban en un arreglo plano (una fila tras otra).
+   - Ahora: cada página será vista como un *nodo hoja* de un árbol B.
+   
+2. Creamos nuevas funciones:
+   - `leaf_node_num_cells`: cuenta cuántas filas hay en una página.
+   - `leaf_node_cell`: nos da acceso a una fila específica.
+   - `leaf_node_value`: nos da el lugar exacto donde guardar o leer datos.
+   - `initialize_leaf_node`: deja lista una página para usarse como nodo hoja.
 
-⚙️ Cambios en el Código
+3. Reorganizamos:
+   - Usamos estas funciones nuevas en lugar del código viejo.
+   - Los `cursores` ahora se mueven dentro de nodos hoja.
 
-- Se introduce cursor.[c|h].
-- Se extrae la lógica de acceso a filas (row_slot) y se transforma en cursor_value(cursor).
-- Se reemplaza table->pager en funciones execute_insert y execute_select por el uso de cursores.
-- Se mantiene la estructura de paginación, pero ahora el cursor encapsula la navegación.
+¿Por qué hacemos todo esto?
+---------------------------
+Aunque no cambiamos la forma en que se guarda la información físicamente, sí cambiamos **cómo pensamos** en ella.
+Ahora todo el código se comporta como si estuviéramos usando árboles B. ¡Eso hace que más adelante, agregar el árbol B real sea mucho más fácil!
 
-🔄 Motivo del Cambio
-
-Hasta ahora, el acceso a los datos era directo: cada fila se localizaba mediante row_num. Esto funciona en una base de datos simple, pero no es flexible para estructuras más complejas.
-
-Con Cursor, ahora:
-- Se puede abstraer la navegación entre filas y páginas.
-- Se facilita el cambio a estructuras como árboles B+.
-- Se encapsula mejor el acceso, lo que simplifica futuras extensiones.
+Resumen
+-------
+🎯 Esta parte no cambia lo que el usuario ve, pero sí cambia cómo está organizado el código por dentro.
+📦 Ahora usamos nodos hoja para representar las páginas.
+📚 El cursor sabe moverse dentro de un nodo, no solo en una lista plana.
+🛠 Esto prepara todo para que pronto podamos tener árboles B verdaderos que nos den búsquedas súper rápidas.

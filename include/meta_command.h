@@ -4,6 +4,7 @@
 #include "inputbuffer.h"  // Porque se usa InputBuffer*
 #include "pager.h"
 #include "table.h"
+#include "node.h"
 
 typedef enum {
     META_COMMAND_SUCCESS,
@@ -11,5 +12,6 @@ typedef enum {
 } MetaCommandResult;
 
 MetaCommandResult do_meta_command(InputBuffer* input_buffer, Table* table);
+void print_constants();
 
 #endif

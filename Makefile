@@ -12,7 +12,8 @@ SRC = \
 	src/backend/row.c \
 	src/backend/table.c \
 	src/backend/pager.c \
-	src/backend/cursor.c
+	src/backend/cursor.c \
+	src/backend/node.c
 
 # Carpeta de salida
 BUILD_DIR = build

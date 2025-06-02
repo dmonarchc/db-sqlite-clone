@@ -12,36 +12,25 @@
 #include "table.h"
 #include "pager.h"
 #include "cursor.h"
-
-void* cursor_value(Cursor* cursor) {
-    uint32_t row_num = cursor->row_num;
-    uint32_t page_num = row_num / ROWS_PER_PAGE;
-    void* page = get_page(cursor->table->pager, page_num);
-    uint32_t row_offset = row_num % ROWS_PER_PAGE;
-    uint32_t byte_offset = row_offset * ROW_SIZE;
-    return page + byte_offset;
-}
+#include "node.h"
 
 Table* db_open(const char* filename) {
-    int fd = open(filename, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR);
-    if (fd == -1) {
-        printf("Unable to open file\n");
-        exit(EXIT_FAILURE);
-    }
-
-    off_t file_length = lseek(fd, 0, SEEK_END);
-
-    Pager* pager = malloc(sizeof(Pager));
-    pager->file_descriptor = fd;
-    pager->file_length = file_length;
-
-    for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
-        pager->pages[i] = NULL;
-    }
-
+    Pager* pager = pager_open(filename);
     Table* table = malloc(sizeof(Table));
     table->pager = pager;
-    table->num_rows = file_length / ROW_SIZE;
+    table->root_page_num = 0;
 
+    if(pager->num_pages == 0) {
+        // New database file. Initialize page 0 as leaf node.
+        void* root_node = get_page(pager, 0);
+        initialize_leaf_node(root_node);
+    }
     return table;
 }
+
+void* cursor_value(Cursor* cursor) {
+    uint32_t page_num = cursor->page_num;
+    void* page = get_page(cursor->table->pager, page_num);
+    return leaf_node_value(page, cursor->cell_num);
+}
+
