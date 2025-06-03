@@ -80,6 +80,19 @@ db-sqlite-clone/
 ✔ Carga de `num_rows` al abrir un archivo existente  
 ✔ Persistencia completa del estado de la tabla en el archivo binario
 
+🟢 Parte 08 completada:
+✔ Se implementa la función leaf_node_find que realiza una búsqueda binaria dentro del nodo hoja para localizar la posición exacta de una clave (key).
+✔ Esta función devuelve un cursor apuntando a la celda donde la clave se encuentra o donde debería insertarse, facilitando inserciones y búsquedas eficientes.
+✔ Se maneja correctamente el caso donde la clave no existe, posicionando el cursor en el lugar adecuado para mantener el orden.
+✔ Esta etapa sienta las bases para operaciones de inserción y búsqueda rápidas dentro del nodo hoja, incrementando la eficiencia del motor.
+
+🟢 Parte 09 completada:
+✔ Se desarrolla la función execute_insert que coordina la inserción de una fila nueva en la base de datos.
+✔ La inserción se realiza usando el cursor obtenido por leaf_node_find, validando previamente que no existan claves duplicadas para evitar inconsistencias.
+✔ Cuando la posición de inserción está en medio del nodo hoja, se desplazan las celdas existentes para abrir espacio y mantener el orden.
+✔ Se realiza la serialización del Row y su almacenamiento en la posición adecuada dentro del nodo hoja, persistiendo los datos correctamente.
+✔ Se corrige la aritmética de punteros y el manejo de offsets para asegurar portabilidad y evitar corrupción de datos, fundamental para la integridad de la base de datos.
+
 ---
 
 ## ⚙ Compilación
