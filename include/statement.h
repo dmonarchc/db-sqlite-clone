@@ -18,7 +18,11 @@ typedef enum {
     PREPARE_UNRECOGNIZED_STATEMENT
 } PrepareResult;
 
-typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } ExecuteResult;
+typedef enum { 
+    EXECUTE_SUCCESS,
+    EXECUTE_DUPLICATED_KEY,
+    EXECUTE_TABLE_FULL
+} ExecuteResult;
 
 typedef struct {
     StatementType type;
