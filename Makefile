@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 -Wall -Iinclude
+CFLAGS = -std=c99 -Wall -Wextra -Wpedantic -Wshadow -Wformat=2 -Wconversion -Wstrict-prototypes -Iinclude
 LDFLAGS = -static
 
 # Listado manual de fuentes
