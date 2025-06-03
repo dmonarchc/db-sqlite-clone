@@ -1,0 +1,19 @@
+Parte 08: Búsqueda en el nodo hoja
+Imagina que tienes una caja con muchos compartimentos, cada uno con un número escrito en él, y quieres encontrar un número específico muy rápido.
+
+¿Cómo hacerlo sin abrir todos los compartimentos?
+Usamos un truco llamado búsqueda binaria:
+
+Miramos el compartimento del medio.
+
+Si el número que buscamos es menor, buscamos en la mitad izquierda.
+
+Si es mayor, buscamos en la mitad derecha.
+
+Repetimos este proceso hasta encontrar el número o saber dónde debería estar si no está.
+
+En la base de datos, esta caja es el nodo hoja y los compartimentos son las celdas con datos.
+
+La función leaf_node_find hace exactamente esto para encontrar el lugar correcto para un dato nuevo o para buscar uno existente.
+
+Al encontrar el lugar correcto, podemos insertar datos en orden o leer datos rápido, sin perder tiempo.

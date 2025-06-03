@@ -1,0 +1,16 @@
+Parte 09: Inserción en el nodo hoja
+Ahora que sabemos dónde poner un nuevo dato, tenemos que insertarlo en la caja sin desordenar todo.
+
+Si el lugar está vacío, simplemente ponemos el dato ahí.
+
+Si el lugar ya tiene un dato, tenemos que mover los demás datos para hacer espacio sin perder el orden.
+
+Para esto usamos un cursor (como un dedo que señala dónde estamos) y vamos moviendo los datos hacia la derecha para abrir espacio.
+
+Luego ponemos el nuevo dato en su lugar correcto.
+
+Además, convertimos el dato (que es como una ficha con información) a una forma que la computadora puede guardar y entender fácilmente, esto se llama serialización.
+
+También nos aseguramos que no haya dos datos con el mismo número (clave), porque eso causaría confusión.
+
+Este proceso mantiene todo ordenado y hace que encontrar datos después sea rápido y seguro.
