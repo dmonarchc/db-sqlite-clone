@@ -66,6 +66,7 @@ Cursor* leaf_node_find(Table* table, uint32_t page_num, uint32_t key) {
     cursor->cell_num = min_index;
     return cursor;
 }
+
 void cursor_advance(Cursor* cursor) {
     uint32_t page_num = cursor->page_num;
     void* node = get_page(cursor->table->pager, page_num);
