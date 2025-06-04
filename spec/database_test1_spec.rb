@@ -1,8 +1,7 @@
 describe 'database' do 
   def run_script(commands)
   raw_output = nil
-
-  IO.popen("./build/db test.db", "r+") do |pipe|
+  IO.popen("./build/db mydb.db", "r+") do |pipe|
     commands.each do |command|
       begin
         pipe.puts command
@@ -13,13 +12,10 @@ describe 'database' do
 
     pipe.close_write
 
-    # Leer línea por línea para evitar problemas de buffering en Windows
-    while line = pipe.gets
-      raw_output << line.strip
+    # Read entire output
+    raw_output = pipe.gets(nil)
     end
-  end
-
-  raw_output
+    raw_output.split("\n")
   end
   
   # Testea el funcionamiendo basico de la db
@@ -38,18 +34,22 @@ describe 'database' do
   end
 
   # Imprime error cuando la tabla esta llena 
-  xit 'prints error message when table is full' do
+  it 'prints error message when table is full' do
     script = (1..1401).map do |i|
       "insert #{i} user#{i} person#{i} example.com"
     end
     script << ".exit"
     result = run_script(script)
-    expect(result[-1]).to eq("db >")
+    expect(result.last(2)).to match_array([
+      "db > Executed.",
+      "db > Need to implement updating parent after split",
+    ])
+    #expect(result[-1]).to eq("db >") Cambio en el test ahora testeamos con los btree
     #expect(result[-1]).to eq('db > Error: Table full.') Error corregido por que ahora usamos paginacion
   end
 
   # Error corregido tambien permitimos ingresar a tope considerando el ultimo caracter vacio
-  xit 'allows inserting strings that are the maximum length' do
+  it 'allows inserting strings that are the maximum length' do
     long_username = "a"*32
     long_email = "a"*255
     script = [
@@ -67,7 +67,7 @@ describe 'database' do
   end
 
   # Test de no existencia de persistencia en disco
-  xit 'keeps data after closing connection' do
+  it 'keeps data after closing connection' do
     result1 = run_script([
       "insert 1 user1 person1@example.com",
       ".exit"
@@ -125,7 +125,7 @@ describe 'database' do
     ])
   end
 
-  xit 'prints constants' do
+  it 'prints constants' do
     script = [
       ".constants",
       ".exit",
