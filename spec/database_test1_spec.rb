@@ -1,12 +1,14 @@
 describe 'database' do 
-  def run_script(commands, filename: 'test.db')
-  raw_output = []
+  def run_script(commands)
+  raw_output = nil
 
-  File.delete(filename) if File.exist?(filename)
-
-  IO.popen(["./build/db", filename], "r+") do |pipe|
+  IO.popen("./build/db test.db", "r+") do |pipe|
     commands.each do |command|
-      pipe.puts command
+      begin
+        pipe.puts command
+      rescue Errno::EPIPE
+        break
+      end
     end
 
     pipe.close_write
@@ -186,7 +188,8 @@ describe 'database' do
       "    - 12",
       "    - 13",
       "    - 14",
-      "db > Need to implement searching an internal node",
+      "db > Executed.",
+      "db > ",
     ])
   end
 end
