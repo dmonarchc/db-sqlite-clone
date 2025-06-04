@@ -1,18 +1,18 @@
 #include <string.h>
 
-#include "statement.h"
-#include "table.h"
 #include "cursor.h"
 #include "node.h"
 #include "pager.h"
+#include "statement.h"
+#include "table.h"
 
 PrepareResult prepare_insert(InputBuffer *input_buffer, Statement *statement) {
   statement->type = STATEMENT_INSERT;
 
-  char* keyword = strtok(input_buffer->buffer, " ");
-  char* id_string = strtok(NULL, " ");
-  char* username = strtok(NULL, " ");
-  char* email = strtok(NULL, " ");
+  char *keyword = strtok(input_buffer->buffer, " ");
+  char *id_string = strtok(NULL, " ");
+  char *username = strtok(NULL, " ");
+  char *email = strtok(NULL, " ");
 
   if (id_string == NULL || username == NULL || email == NULL) {
     return PREPARE_SYNTAX_ERROR;
@@ -49,17 +49,15 @@ PrepareResult prepare_statement(InputBuffer *input_buffer,
   return PREPARE_UNRECOGNIZED_STATEMENT;
 }
 
-ExecuteResult execute_insert(Statement* statement, Table* table) {
-  Row* row_to_insert = &(statement->row_to_insert);
+ExecuteResult execute_insert(Statement *statement, Table *table) {
+  void *node = get_page(table->pager, table->root_page_num);
+  uint32_t num_cells = (*leaf_node_num_cells(node));
+
+  Row *row_to_insert = &(statement->row_to_insert);
   uint32_t key_to_insert = row_to_insert->id;
+
   Cursor* cursor = table_find(table, key_to_insert);
-
-  void* node = get_page(table->pager, cursor->page_num);
-  uint32_t num_cells = *leaf_node_num_cells(node);
-  if (num_cells >= LEAF_NODE_MAX_CELLS) {
-    return EXECUTE_TABLE_FULL;
-  }
-
+  
   if (cursor->cell_num < num_cells) {
     uint32_t key_at_index = *leaf_node_key(node, cursor->cell_num);
     if (key_at_index == key_to_insert) {
@@ -68,13 +66,14 @@ ExecuteResult execute_insert(Statement* statement, Table* table) {
   }
 
   leaf_node_insert(cursor, row_to_insert->id, row_to_insert);
+
   free(cursor);
 
   return EXECUTE_SUCCESS;
 }
 
 ExecuteResult execute_select(Statement *statement, Table *table) {
-  Cursor* cursor = table_start(table);
+  Cursor *cursor = table_start(table);
   Row row;
   while (!(cursor->end_of_table)) {
     deserialize_row(cursor_value(cursor), &row);
@@ -83,7 +82,7 @@ ExecuteResult execute_select(Statement *statement, Table *table) {
   }
 
   free(cursor);
-  
+
   return EXECUTE_SUCCESS;
 }
 
