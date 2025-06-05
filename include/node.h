@@ -31,9 +31,9 @@ typedef enum { NODE_INTERNAL, NODE_LEAF } NodeType;
  */
 #define LEAF_NODE_NUM_CELLS_SIZE (sizeof(uint32_t))
 #define LEAF_NODE_NUM_CELLS_OFFSET (COMMON_NODE_HEADER_SIZE)
-#define LEAF_NODE_HEADER_SIZE                                                  \
-  (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE)
-
+#define LEAF_NODE_NEXT_LEAF_SIZE (sizeof(uint32_t))
+#define LEAF_NODE_NEXT_LEAF_OFFSET (LEAF_NODE_NUM_CELLS_OFFSET + LEAF_NODE_NUM_CELLS_SIZE)
+#define LEAF_NODE_HEADER_SIZE (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE + LEAF_NODE_NEXT_LEAF_SIZE)
 /*
  *   Leaf Node Body Layout
  */
@@ -96,4 +96,5 @@ void set_node_root(void* node, bool is_root);
 void indent(uint32_t level);
 void print_tree(Pager* pager, uint32_t page_num, uint32_t indentation_level);
 Cursor* internal_node_find(Table* table, uint32_t page_num, uint32_t key);
+uint32_t* leaf_node_next_leaf(void* node);
 #endif // NODE_H
